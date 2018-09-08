@@ -12,6 +12,7 @@
     "debug": "~2.6.3",
     "express": "~4.15.2",
     "hbs": "~4.0.1",
+    "jshint": "^2.9.6",
     "morgan": "~1.8.1",
     "serve-favicon": "~2.4.2"
   }
