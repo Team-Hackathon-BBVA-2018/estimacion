@@ -10,12 +10,28 @@ module.exports = {
         primaryKey: true,
         field: 'id_pyme'
       },
+      numeroCliente: {
+        type: Sequelize.INTEGER,
+        field: 'numero_cliente'
+      },
       nombre: {
         type: Sequelize.TEXT,
         allowNull: true
       },
       rfc: {
         type: Sequelize.TEXT,
+        allowNull: true
+      },
+      sector: {
+        type: Sequelize.TEXT,
+        allowNull: true
+      },
+      actividad: {
+        type: Sequelize.TEXT,
+        allowNull: true
+      },
+      antiguedad: {
+        type: Sequelize.DATEONLY,
         allowNull: true
       },
       calle: {
@@ -47,10 +63,6 @@ module.exports = {
         allowNull: true
       },
       pais: {
-        type: Sequelize.TEXT,
-        allowNull: true
-      },
-      sector: {
         type: Sequelize.TEXT,
         allowNull: true
       },
