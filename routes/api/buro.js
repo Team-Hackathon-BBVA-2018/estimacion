@@ -4,17 +4,17 @@
 const express = require('express');
 const router = express.Router();
 const _ = require('lodash');
-const debug = require('debug')('estimacion:routes:pyme');
+const debug = require('debug')('estimacion:routes:buro');
 const controllers = require('../../controllers');
 
 var routes = {
-    //"/": {
-    //    GET: {
-    //        middleware: [
-    //            controllers.api.PyMEController.index
-    //        ]
-    //    }
-    //}
+    "/:id": {
+        GET: {
+            middleware: [
+                controllers.api.PyMEController.buro
+            ]
+        }
+    }
 };
 
 _.forOwn(routes, function (methods, endpoint) {

@@ -2,6 +2,8 @@
 'use strict';
 
 const debug = require('debug')('estimacion:models:PyME');
+const settings = require('../sources/additional.json');
+const _ = require('lodash');
 
 module.exports = (sequelize, DataTypes) => {
 
@@ -92,11 +94,64 @@ module.exports = (sequelize, DataTypes) => {
         });
     };
 
-    PyME.prototype.algo = function() {
-        console.log(this);
-        return this.saldo['201611'] + this.saldo['201612'];
+    PyME.prototype.info = function () {
+        return {
+            nombre: this.nombre,
+            rfc: this.rfc,
+            sector: this.sector,
+            actividad: this.actividad,
+            antiguedad: this.antiguedad
+        };
+    };
+
+    PyME.prototype.infoBuro = function () {
+        let deuda = [];
+        let montoInicial = [];
+        let monedas = [];
+        let otorgantes = {};
+        otorgantes.total = [];
+        otorgantes.detalles = {};//settings.otorgantes;
+
+        _.each(this.buro, buro => {
+            deuda.push(buro.vigente);
+            montoInicial.push(buro.saldoInicial);
+            monedas.push(settings.moneda[buro.moneda]);
+            otorgantes.total.push(buro.tipoOtorgante);
+            if (otorgantes.detalles[buro.tipoOtorgante] === undefined) {
+                otorgantes.detalles[buro.tipoOtorgante] = {
+                    total: 0,
+                    oportunidad: 0
+                };
+            }
+            otorgantes.detalles[buro.tipoOtorgante].total += 1;
+            otorgantes.detalles[buro.tipoOtorgante].oportunidad += buro.saldoInicial;
+        });
+
+        let moneda = _.countBy(monedas, moneda => {
+            return moneda;
+        });
+
+        otorgantes.total = _.countBy(otorgantes.total, otorgante => {
+            return otorgante;
+        });
+
+        let sumDeuda = _.sum(deuda);
+        let sumInicial = _.sum(montoInicial);
+        let pagado = sumInicial - sumDeuda;
+        let porcentajePagado = Math.round((pagado * 100 / sumInicial) * 100) / 100;
+
+        return {
+            montoInicial: sumInicial,
+            deuda: sumDeuda,
+            pagado: pagado,
+            porcentajePagado: porcentajePagado,
+            creditos: {
+                creditosSolicitados: this.buro.length,
+                monedas: moneda,
+                otorgantes
+            }
+        };
     };
 
     return PyME;
 };
-

@@ -1,0 +1,82 @@
+{
+    "creditos": {
+        "1305": "Crédito no revolvente",
+        "1380": "Crédito revolvente",
+        "6280": "Crédito revolvente",
+        "3011": "Factoraje",
+        "6270": "Crédito Automotriz",
+        "6260": "Crédito Fiscal",
+        "1300": "Arrendamiento",
+        "1301": "Descuentos"
+    },
+    "historico": {
+        "1": "Pagado",
+        "2": "Sin pagar"
+    },
+    "moneda": {
+        "1": "Pesos",
+        "5": "Doláres",
+        "100": "Euros",
+        "3": "UDI",
+        "74": "Dolár Australiano",
+        "2": "Moneda Sueca"
+    },
+    "otorgantes": {
+        "SEGUROS": {
+            "total": 0,
+            "oportunidad": 0
+        },
+        "FACTORAJE": {
+            "total": 0,
+            "oportunidad": 0
+        },
+        "FONDOS Y FIDEICOMISOS": {
+            "total": 0,
+            "oportunidad": 0
+        },
+        "UNION DE CREDITO": {
+            "total": 0,
+            "oportunidad": 0
+        },
+        "OTRAS FINANCIERAS": {
+            "total": 0,
+            "oportunidad": 0
+        },
+        "BANCO": {
+            "total": 0,
+            "oportunidad": 0
+        },
+        "COMERCIAL": {
+            "total": 0,
+            "oportunidad": 0
+        },
+        "GOBIERNO": {
+            "total": 0,
+            "oportunidad": 0
+        },
+        "FIANZAS": {
+            "total": 0,
+            "oportunidad": 0
+        },
+        "ARRENDADORA": {
+            "total": 0,
+            "oportunidad": 0
+        },
+        "BBV": {
+            "total": 0,
+            "oportunidad": 0
+        },
+        "CAJAS DE AHORRO": {
+            "total": 0,
+            "oportunidad": 0
+        },
+        "ALMACENADORA": {
+            "total": 0,
+            "oportunidad": 0
+        },
+        "null": {
+            "total": 0,
+            "oportunidad": 0
+        }
+    }
+}

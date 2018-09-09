@@ -8,15 +8,20 @@ const Deposito = require('../../models').Deposito;
 const Buro = require('../../models').Buro;
 
 module.exports = {
-    index: (req, res, next) =>  {
-        PyME.findById(1, {
+    buro: (req, res, next) =>  {
+        PyME.findById(req.params.id, {
                 include: [{
                     model: Buro,
                     as: 'buro'
                 }]
             })
             .then(pyme => {
-                console.log(pyme);
+                let infoPyME = pyme.info();
+                let infoBuro = pyme.infoBuro();
+                return res.json({
+                    datosEmpresariales: infoPyME,
+                    buro: infoBuro
+                });
             });
     }
 };
