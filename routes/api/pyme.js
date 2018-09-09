@@ -8,13 +8,20 @@ const debug = require('debug')('estimacion:routes:pyme');
 const controllers = require('../../controllers');
 
 var routes = {
-    //"/": {
-    //    GET: {
-    //        middleware: [
-    //            controllers.api.PyMEController.index
-    //        ]
-    //    }
-    //}
+    "/": {
+        GET: {
+            middleware: [
+                controllers.api.PyMEController.index
+            ]
+        }
+    },
+    "/:id": {
+        GET: {
+            middleware: [
+                controllers.api.PyMEController.index
+            ]
+        }
+    }
 };
 
 _.forOwn(routes, function (methods, endpoint) {

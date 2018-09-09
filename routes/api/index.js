@@ -25,7 +25,7 @@ function loadRoutes(location) {
             if (file.slice(-3) === '.js') {
                 nombre = file.substring(0, file.indexOf("."));
                 pathRouter = path.join(location, nombre);
-                debug("Cargando archivo js: ", nombre)
+                debug("Cargando archivo js: ", nombre);
                 fileRouter = require(pathRouter);
                 router.use("/" + nombre, fileRouter);
             } else {
