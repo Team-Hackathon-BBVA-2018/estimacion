@@ -55,6 +55,10 @@ module.exports = (sequelize, DataTypes) => {
         inversionExterna: {
             type: DataTypes.FLOAT,
             field: 'inversion_externa'
+        },
+        creditoMasSolicitado: {
+            type: DataTypes.TEXT,
+            field: 'credito_mas_solicitado'
         }
     }, {
         tableName: 'resultados',

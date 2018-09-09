@@ -54,6 +54,10 @@ module.exports = {
         type: Sequelize.FLOAT,
         field: 'inversion_externa'
       },
+      creditoMasSolicitado: {
+        type: Sequelize.TEXT,
+        field: 'credito_mas_solicitado'
+      },
       createdAt: {
         type: Sequelize.DATE,
         defaultValue: Sequelize.fn('now'),

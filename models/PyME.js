@@ -199,21 +199,26 @@ module.exports = (sequelize, DataTypes) => {
         let deuda = [];
         let montoInicial = [];
         let monedas = [];
+        let tipoCredito = [];
         let otorgantes = {};
-        otorgantes.detalles = {}; //settings.otorgantes;
 
         _.each(this.buro, buro => {
             deuda.push(buro.vigente);
             montoInicial.push(buro.saldoInicial);
             monedas.push(settings.moneda[buro.moneda]);
-            if (otorgantes.detalles[buro.tipoOtorgante] === undefined) {
-                otorgantes.detalles[buro.tipoOtorgante] = {
+            if (otorgantes[buro.tipoOtorgante] === undefined) {
+                otorgantes[buro.tipoOtorgante] = {
                     total: 0,
                     oportunidad: 0
                 };
             }
-            otorgantes.detalles[buro.tipoOtorgante].total += 1;
-            otorgantes.detalles[buro.tipoOtorgante].oportunidad += buro.saldoInicial;
+            tipoCredito.push(settings.creditos[buro.tipoCredito]);
+            otorgantes[buro.tipoOtorgante].total += 1;
+            otorgantes[buro.tipoOtorgante].oportunidad += buro.saldoInicial;
+        });
+
+        let tipoCreditos = _.countBy(tipoCredito, a => {
+            return a;
         });
 
         let moneda = _.countBy(monedas, moneda => {
@@ -233,6 +238,7 @@ module.exports = (sequelize, DataTypes) => {
             creditos: {
                 creditosSolicitados: this.buro.length,
                 monedas: moneda,
+                tipos: tipoCreditos,
                 otorgantes
             }
         };
