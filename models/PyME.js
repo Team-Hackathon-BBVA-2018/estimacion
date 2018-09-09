@@ -106,14 +106,14 @@ module.exports = (sequelize, DataTypes) => {
                 increasesByPeriod.push(increase);
                 if(index === 0 ){
                     periods[period] = {
-                        "saldo": saldoPeriods[index],
+                        "saldo": this.saldo[saldoPeriods[index]],
                         "incremento": `0.0%`,
                     }
                 }
                 else{
                     periods[period] = {
-                        "Saldo": saldoPeriods[index + 1],
-                        "Incremento": `${increase}%`,
+                        "saldo": this.saldo[saldoPeriods[index + 1]],
+                        "incremento": `${increase}%`,
                         "periodoAnterior": saldoPeriods[index]
                     }
                 }
@@ -134,7 +134,53 @@ module.exports = (sequelize, DataTypes) => {
         }
         return response;
     };
-
+    PyME.prototype.crecimientoDepositos = function() {
+        console.log(this);
+        let depositoPeriods = [];
+        let increasesByPeriod = [];
+        let periods = {};  
+        for(let key in this.deposito.rawAttributes){
+            if(/^([0-9]{5,})$/.test(key)){
+                depositoPeriods.push(key);
+            }
+        }
+        debug(depositoPeriods);
+        let totalIncrease = Math.round((this.deposito[_.last(depositoPeriods)]/this.deposito[_.first(depositoPeriods)] - 1) * 100)/100;
+        depositoPeriods.filter((period, index)=>{
+            if(index < depositoPeriods.length - 1){
+                debug(`Iterating: ${this.deposito[depositoPeriods[index]]}`);
+                let increase = Math.round((this.deposito[depositoPeriods[index + 1]]/this.deposito[depositoPeriods[index]] -1 ) * 100)/100;
+                increasesByPeriod.push(increase);
+                if(index === 0 ){
+                    periods[period] = {
+                        "deposito": this.deposito[depositoPeriods[index]],
+                        "incremento": `0.0%`,
+                    }
+                }
+                else{
+                    periods[period] = {
+                        "deposito": this.deposito[depositoPeriods[index + 1]],
+                        "incremento": `${increase}%`,
+                        "periodoAnterior": depositoPeriods[index]
+                    }
+                }
+            }
+        });
+        let averageIncrease = increasesByPeriod.reduce((lastIncrement, currentIncrement)=>{
+            return lastIncrement + currentIncrement;
+        });
+        debug(averageIncrease);
+        debug(`Total increase in 25 months: ${totalIncrease}`);
+        debug(`Total increase in 25 months: ${totalIncrease}`);
+        averageIncrease = Math.round((averageIncrease / depositoPeriods.length) * 100)/100;
+        debug(`Average increment by period: ${averageIncrease}`);
+        let response = {
+            "tasaDeIncremento": averageIncrease,
+            "incrementoTotal": totalIncrease,
+            "periodos": periods
+        }
+        return response;
+    };
 
     return PyME;
 };

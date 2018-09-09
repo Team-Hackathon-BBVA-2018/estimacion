@@ -8,7 +8,8 @@ const Deposito = require('../../models').Deposito;
 
 module.exports = {
     index: (req, res, next) =>  {
-        let id = (req.id ? req.id : 1);
+        let id = (req.params.id ? req.params.id : 1);
+        debug(`Id to search: ${id}`);
         PyME.findById(id, {
                 include: [{
                     model: Saldo,
@@ -28,9 +29,14 @@ module.exports = {
                 }]
             })
             .then(pyme => {
-                let x = pyme.crecimientoSaldos();
-                console.log(x);
-                res.status(200).json(x);
+                let saldosResume = pyme.crecimientoSaldos();
+                let depositosResume = pyme.crecimientoDepositos();
+                let fullResume = {
+                    "nombre": pyme.nombre,
+                    "resumenDeSaldos": saldosResume,
+                    "resumenDeDepositos": depositosResume 
+                }
+                res.status(200).json(fullResume);
             });
     }
 };
