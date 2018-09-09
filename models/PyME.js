@@ -2,6 +2,7 @@
 'use strict';
 
 const debug = require('debug')('estimacion:models:PyME');
+const _ = require('lodash');
 
 module.exports = (sequelize, DataTypes) => {
 
@@ -86,10 +87,54 @@ module.exports = (sequelize, DataTypes) => {
         });
     };
 
-    PyME.prototype.algo = function() {
+    PyME.prototype.crecimientoSaldos = function() {
         console.log(this);
-        return this.saldo['201611'] + this.saldo['201612'];
+        let saldoPeriods = [];
+        let increasesByPeriod = [];
+        let periods = {};  
+        for(let key in this.saldo.rawAttributes){
+            if(/^([0-9]{5,})$/.test(key)){
+                saldoPeriods.push(key);
+            }
+        }
+        debug(saldoPeriods);
+        let totalIncrease = Math.round((this.saldo[_.last(saldoPeriods)]/this.saldo[_.first(saldoPeriods)] - 1) * 100)/100;
+        saldoPeriods.filter((period, index)=>{
+            if(index < saldoPeriods.length - 1){
+                debug(`Iterating: ${this.saldo[saldoPeriods[index]]}`);
+                let increase = Math.round((this.saldo[saldoPeriods[index + 1]]/this.saldo[saldoPeriods[index]] -1 ) * 100)/100;
+                increasesByPeriod.push(increase);
+                if(index === 0 ){
+                    periods[period] = {
+                        "saldo": saldoPeriods[index],
+                        "incremento": `0.0%`,
+                    }
+                }
+                else{
+                    periods[period] = {
+                        "Saldo": saldoPeriods[index + 1],
+                        "Incremento": `${increase}%`,
+                        "periodoAnterior": saldoPeriods[index]
+                    }
+                }
+            }
+        });
+        let averageIncrease = increasesByPeriod.reduce((lastIncrement, currentIncrement)=>{
+            return lastIncrement + currentIncrement;
+        });
+        debug(averageIncrease);
+        debug(`Total increase in 25 months: ${totalIncrease}`);
+        debug(`Total increase in 25 months: ${totalIncrease}`);
+        averageIncrease = Math.round((averageIncrease / saldoPeriods.length) * 100)/100;
+        debug(`Average increment by period: ${averageIncrease}`);
+        let response = {
+            "tasaDeIncremento": averageIncrease,
+            "incrementoTotal": totalIncrease,
+            "periodos": periods
+        }
+        return response;
     };
+
 
     return PyME;
 };

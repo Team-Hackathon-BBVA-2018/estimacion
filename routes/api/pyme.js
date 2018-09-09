@@ -14,6 +14,13 @@ var routes = {
                 controllers.api.PyMEController.index
             ]
         }
+    },
+    "/:id": {
+        GET: {
+            middleware: [
+                controllers.api.PyMEController.index
+            ]
+        }
     }
 };
 

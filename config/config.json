@@ -1,10 +1,10 @@
 {
   "development": {
-    "username": "erick",
-    "password": "123456a",
+    "username": "ceviche",
+    "password": "admin",
     "database": "bbva",
     "host": "localhost",
-    "port": 5433,
+    "port": 5432,
     "dialect": "postgresql"
   },
   "test": {
