@@ -11,7 +11,7 @@ module.exports = {
         field: 'id_pyme'
       },
       numeroCliente: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.TEXT,
         field: 'numero_cliente'
       },
       nombre: {
@@ -43,7 +43,7 @@ module.exports = {
         allowNull: true
       },
       exterior: {
-        type: Sequelize.TEXT, 
+        type: Sequelize.TEXT,
         allowNull: true
       },
       departamento: {
