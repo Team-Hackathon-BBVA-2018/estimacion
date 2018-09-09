@@ -5,6 +5,7 @@ const debug = require('debug')('estimacion:controllers:api:PyMEController');
 const PyME = require('../../models').PyME;
 const Saldo = require('../../models').Saldo;
 const Deposito = require('../../models').Deposito;
+const Inegi = require('../../services/InegiService');
 
 module.exports = {
     index: (req, res, next) =>  {
@@ -29,14 +30,22 @@ module.exports = {
                 }]
             })
             .then(pyme => {
-                let saldosResume = pyme.crecimientoSaldos();
-                let depositosResume = pyme.crecimientoDepositos();
-                let fullResume = {
-                    "nombre": pyme.nombre,
-                    "resumenDeSaldos": saldosResume,
-                    "resumenDeDepositos": depositosResume 
-                }
-                res.status(200).json(fullResume);
+                const nombre = pyme.nombre;
+                debug(`Name: ${nombre}`);
+                Inegi.searchByName(pyme.nombre, (inegiData)=>{
+                    debug('Done', inegiData);
+                    let results = inegiData;
+                    console.log(inegiData);
+                    let saldosResume = pyme.crecimientoSaldos();
+                    let depositosResume = pyme.crecimientoDepositos();
+                    let fullResume = {
+                        "nombre": pyme.nombre,
+                        "resumenDeSaldos": saldosResume,
+                        "resumenDeDepositos": depositosResume,
+                        "resultados": results
+                    }
+                    res.status(200).json(fullResume);
+                });
             });
     }
 };

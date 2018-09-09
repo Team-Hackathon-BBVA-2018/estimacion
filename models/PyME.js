@@ -88,7 +88,6 @@ module.exports = (sequelize, DataTypes) => {
     };
 
     PyME.prototype.crecimientoSaldos = function() {
-        console.log(this);
         let saldoPeriods = [];
         let increasesByPeriod = [];
         let periods = {};  
@@ -135,7 +134,6 @@ module.exports = (sequelize, DataTypes) => {
         return response;
     };
     PyME.prototype.crecimientoDepositos = function() {
-        console.log(this);
         let depositoPeriods = [];
         let increasesByPeriod = [];
         let periods = {};  
