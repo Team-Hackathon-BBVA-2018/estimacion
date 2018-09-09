@@ -109,14 +109,12 @@ module.exports = (sequelize, DataTypes) => {
         let montoInicial = [];
         let monedas = [];
         let otorgantes = {};
-        otorgantes.total = [];
         otorgantes.detalles = {};//settings.otorgantes;
 
         _.each(this.buro, buro => {
             deuda.push(buro.vigente);
             montoInicial.push(buro.saldoInicial);
             monedas.push(settings.moneda[buro.moneda]);
-            otorgantes.total.push(buro.tipoOtorgante);
             if (otorgantes.detalles[buro.tipoOtorgante] === undefined) {
                 otorgantes.detalles[buro.tipoOtorgante] = {
                     total: 0,
@@ -129,10 +127,6 @@ module.exports = (sequelize, DataTypes) => {
 
         let moneda = _.countBy(monedas, moneda => {
             return moneda;
-        });
-
-        otorgantes.total = _.countBy(otorgantes.total, otorgante => {
-            return otorgante;
         });
 
         let sumDeuda = _.sum(deuda);
