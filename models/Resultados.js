@@ -59,6 +59,10 @@ module.exports = (sequelize, DataTypes) => {
         creditoMasSolicitado: {
             type: DataTypes.TEXT,
             field: 'credito_mas_solicitado'
+        },
+        numeroCliente: {
+            type: DataTypes.TEXT,
+            field: 'numero_cliente'
         }
     }, {
         tableName: 'resultados',

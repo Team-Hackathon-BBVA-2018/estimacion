@@ -58,6 +58,10 @@ module.exports = {
         type: Sequelize.TEXT,
         field: 'credito_mas_solicitado'
       },
+      numeroCliente: {
+        type: Sequelize.TEXT,
+        field: 'numero_cliente'
+      },
       createdAt: {
         type: Sequelize.DATE,
         defaultValue: Sequelize.fn('now'),

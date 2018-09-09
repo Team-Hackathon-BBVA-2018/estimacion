@@ -87,6 +87,7 @@ module.exports = {
                     creditosSolicitados: infoBuro.creditos.creditosSolicitados,
                     creditosExternos: creditosExternos,
                     inversionExterna: inversionExterna,
+                    numeroCliente: pyme.numeroCliente
                     //creditoMasSolicitado:
                 };
 
