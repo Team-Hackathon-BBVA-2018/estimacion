@@ -1,5 +1,7 @@
+/* jshint node: true */
 'use strict';
 
+const debug = require('debug')('estimacion:models');
 const fs = require('fs');
 const path = require('path');
 const Sequelize = require('sequelize');
@@ -22,6 +24,7 @@ fs
   })
   .forEach(file => {
     const model = sequelize['import'](path.join(__dirname, file));
+    debug("Loading model: ", file);
     db[model.name] = model;
   });
 

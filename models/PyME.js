@@ -68,7 +68,29 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.TEXT,
             allowNull: true
         }
+    }, {
+        tableName: 'pyme',
+        underscored: true,
+        paranoid: true
     });
+
+    PyME.associate = models => {
+        PyME.hasOne(models.Deposito, {
+            as: 'deposito',
+            foreignKey: 'id_pyme'
+        });
+
+        PyME.hasOne(models.Saldo, {
+            as: 'saldo',
+            foreignKey: 'id_pyme'
+        });
+    };
+
+    PyME.prototype.algo = function() {
+        console.log(this);
+        return this.saldo['201611'] + this.saldo['201612'];
+    };
 
     return PyME;
 };
+

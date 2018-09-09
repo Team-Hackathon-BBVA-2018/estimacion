@@ -1,11 +1,11 @@
 /* jshint node: true */
 'use strict';
 
-const debug = require('debug')('estimacion:models:Deposito');
+const debug = require('debug')('estimacion:models:Saldo');
 
 module.exports = (sequelize, DataTypes) => {
 
-    const Deposito = sequelize.define('Deposito', {
+    const Saldo = sequelize.define('Saldo', {
         id: {
             type: DataTypes.INTEGER,
             autoIncrement: true,
@@ -117,10 +117,10 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: true
         }
     }, {
-        tableName: 'depositos',
+        tableName: 'saldos',
         underscored: true,
         paranoid: true
     });
 
-    return Deposito;
+    return Saldo;
 };
