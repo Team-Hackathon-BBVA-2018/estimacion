@@ -84,6 +84,12 @@ module.exports = (sequelize, DataTypes) => {
             as: 'saldo',
             foreignKey: 'id_pyme'
         });
+
+        PyME.hasMany(models.Buro, {
+            as: 'buro',
+            foreignKey: 'numero_cliente',
+            sourceKey: 'numero_cliente'
+        });
     };
 
     PyME.prototype.algo = function() {
